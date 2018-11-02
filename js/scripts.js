@@ -17,8 +17,19 @@ req.onload = function() {
     var html = parser.parseFromString(htmlString, 'text/html'); // Convert HTML String to DOM Object
 
     // Begin Actual Scraping/Parsing
-    var tables = document.getElementsByTagName('table');
-
+    var tables = html.getElementsByTagName('table');
+    // Scrape Update Timestamp
+    var regex = /(Updated: )([\w\s,:.])+(ET)/ig;
+    var timestamp = '';
+    for(let i = 0; i < tables.length; i++) {
+      if(tables[i].innerText.match(regex) !== null) {
+        timestamp = tables[i].innerText.match(regex);
+      }
+      /*
+      for(let j = 0; j < tables[i].children[0].children.length - 3; j++) { // -3 to remove junk from the end
+        console.log(tables[i].children[0].children[j]);
+      }*/
+    }
   }
 }
 req.send(null);
