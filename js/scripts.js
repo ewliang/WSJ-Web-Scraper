@@ -21,15 +21,20 @@ req.onload = function() {
     // Scrape Update Timestamp
     var regex = /(Updated: )([\w\s,:.])+(ET)/ig;
     var timestamp = '';
+    var data = [];
     for(let i = 0; i < tables.length; i++) {
       if(tables[i].innerText.match(regex) !== null) {
         timestamp = tables[i].innerText.match(regex);
       }
-      /*
       for(let j = 0; j < tables[i].children[0].children.length - 3; j++) { // -3 to remove junk from the end
-        console.log(tables[i].children[0].children[j]);
-      }*/
+        var dataRow = [];
+        for(let k = 0; k < tables[i].children[0].children[j].children.length; k++) {
+          dataRow.push(tables[i].children[0].children[j].children[k].innerText);
+        }
+        data.push(dataRow);
+      }
     }
+    console.table(data);
   }
 }
 req.send(null);
